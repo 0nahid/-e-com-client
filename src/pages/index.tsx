@@ -7,7 +7,6 @@ export default function Index() {
     <div className="min-h-screen container mx-auto">
       <Navbar />
       <Home />
-      <Products />
     </div>
   )
 }

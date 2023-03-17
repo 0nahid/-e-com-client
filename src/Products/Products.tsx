@@ -1,3 +1,4 @@
+
 import Pagination from "@/Shared/Pagination";
 import { useQuery } from "@tanstack/react-query";
 import { useRouter } from 'next/router';
@@ -6,6 +7,7 @@ import { useEffect, useState } from "react";
 export default function Products() {
     const [limit, setLimit] = useState<number>(10);
     const [currentPage, setCurrentPage] = useState<number>(1);
+    const [category, setCategory] = useState<string>("");
     const router = useRouter();
     const { query } = router;
     console.log(query);
@@ -24,25 +26,27 @@ export default function Products() {
         <>
             <div className="grid sm:grid-cols-1 md:grid-cols-4 lg:grid-cols-6 gap-10 justify-items-center">
                 {products?.data?.map((product: any) => (
-                    <div className="card card-compact card-bordered w-75 bg-base-100 shadow-xl" key={product._id}>
-                        <div className="card-body">
+                    <div className="w-75 shadow-xl" key={product._id}>
+                        <div className="">
                             <figure>
-                                <img src="" alt="" />
+                                {/* use the 1st image from the array */}
+                                {product?.images?.length > 0 && (<img className="w-full" src={product?.images[0]} alt="" />)}
                             </figure>
-                            <h5 className="card-title">
-                                {product?.name?.slice(0, 25) + (product?.name?.length > 25 ? "..." : "")}
-                            </h5>
-                            <p>
-                                {product?.description?.slice(0, 50) + (product?.description?.length > 50 ? "..." : "")}
-                            </p>
-                            <div className="card-actions">
-                                <button className="btn btn-primary btn-sm">Add to Cart</button>
+                            <div className="p-2">
+                                <h5 className="text-md font-semibold">
+                                    {product?.name?.slice(0, 25) + (product?.name?.length > 25 ? "..." : "")}
+                                </h5>
+                                <p className="text-md">
+                                    {product?.description?.slice(0, 50) + (product?.description?.length > 50 ? "..." : "")}
+                                </p>
+                                <div className="">
+                                    <button className="btn btn-primary btn-sm">Add to Cart</button>
+                                </div>
                             </div>
                         </div>
                     </div>
                 ))}
             </div>
-
             {/* pagination */}
             <div className="flex justify-center">
                 <Pagination total={products?.total} limit={limit} currentPage={currentPage} setCurrentPage={setCurrentPage}

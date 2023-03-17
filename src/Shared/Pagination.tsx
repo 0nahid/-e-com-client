@@ -22,15 +22,21 @@ export default function Pagination({ total, limit, currentPage, setCurrentPage, 
                 >{page}</button>
             ))}
 
-            <select
-                className="btn btn-ghost" onChange={(e) => setLimit && setLimit(parseInt(e.target.value))
-                }>
-               {
-                     [10,15,20].map((limit) => (
-                        <option key={limit} value={limit}>{limit}</option>
-                    ))
-               }
-            </select>
+            {
+                limit && setLimit && (
+                    <div>
+                        <select
+                            className="btn btn-ghost" onChange={(e) => setLimit && setLimit(parseInt(e.target.value))
+                            }>
+                            {
+                                [10, 15, 20].map((limit) => (
+                                    <option key={limit} value={limit}>{limit}</option>
+                                ))
+                            }
+                        </select>
+                    </div>
+                )
+            }
         </div>
     );
 }
