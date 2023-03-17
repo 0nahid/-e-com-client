@@ -1,6 +1,7 @@
 
 import Pagination from "@/Shared/Pagination";
 import { useQuery } from "@tanstack/react-query";
+import Link from "next/link";
 import { useRouter } from 'next/router';
 import { useEffect, useState } from "react";
 
@@ -10,7 +11,7 @@ export default function Products() {
     const [category, setCategory] = useState<string>("");
     const router = useRouter();
     const { query } = router;
-    console.log(query);
+    // console.log(query);
 
     const products = GetProducts(query);
     useEffect(() => {
@@ -20,7 +21,14 @@ export default function Products() {
     }, [limit, currentPage])
 
 
-    if (products?.data?.length === 0) return <h1>No products</h1>
+    if (products?.data?.length === 0) return (
+        <div className="flex justify-center items-center flex-col">
+            <h1 className="text-2xl font-semibold">No products found</h1>
+            <Link href="/">
+                <span className="ml-2 text-blue-500">Go back</span>
+            </Link>
+        </div>
+    )
 
     return (
         <>
@@ -59,12 +67,13 @@ export default function Products() {
 
 
 function GetProducts(query: any) {
-    const { data } = useQuery({
+    const { data, isLoading } = useQuery({
         queryKey: ["products", query?.page, query?.limit, query?.sort, query?.order, query?.search, query?.category, query?.brand, query?.rating, query?.inStock, query?.fastDelivery],
         queryFn: () => fetch(`http://localhost:5000/api/v1/products?limit=${query.limit}&page=${query.page}`).then(res => res.json())
     })
     return {
         data: data?.data,
         total: data?.count,
+        isLoading
     }
 }

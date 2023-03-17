@@ -4,8 +4,7 @@ import Sidebar from "../Sidebar/Sidebar";
 export default function Home() {
     return (
         <>
-            <div className="flex justify-between gap-3">
-
+            <div className="flex justify-between">
                 <div>
                     <Sidebar />
                 </div>

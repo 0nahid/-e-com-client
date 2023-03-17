@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { useState } from 'react';
+import Brand from "./Brand";
 
 interface Category {
     _id: string;
@@ -56,6 +57,8 @@ export default function Category() {
                     </li>
                 ))}
             </ul>
+            {/* Brand under the category */}
+            {selectedCategoryId && <Brand selectedCategoryId={selectedCategoryId} />}
         </>
     );
 }
