@@ -1,0 +1,4 @@
+// actionTypes.ts
+
+export const SET_SELECTED_CATEGORY_ID = "SET_SELECTED_CATEGORY_ID";
+export const SET_SELECTED_BRAND_ID = "SET_SELECTED_BRAND_ID";

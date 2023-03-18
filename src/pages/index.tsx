@@ -1,6 +1,6 @@
-import Products from "@/Products/Products";
+import Home from "@/Home/Home";
+
 import Navbar from "@/Shared/Navbar";
-import Home from "./Home/Home";
 
 export default function Index() {
   return (

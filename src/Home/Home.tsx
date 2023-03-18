@@ -1,4 +1,5 @@
 import Products from "@/Products/Products";
+import Link from "next/link";
 import Sidebar from "../Sidebar/Sidebar";
 
 export default function Home() {
@@ -7,6 +8,9 @@ export default function Home() {
             <div className="flex justify-between">
                 <div>
                     <Sidebar />
+                    <Link href="/Test">
+                        test
+                    </Link>
                 </div>
                 <div>
                     <Products />
