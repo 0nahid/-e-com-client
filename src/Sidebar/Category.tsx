@@ -1,5 +1,6 @@
+import { StateContext } from "@/Context/StateContext";
 import { useQuery } from "@tanstack/react-query";
-import { useState } from 'react';
+import { useContext } from 'react';
 import Brand from "./Brand";
 
 interface Category {
@@ -10,7 +11,8 @@ interface Category {
 }
 
 export default function Category() {
-    const [selectedCategoryId, setSelectedCategoryId] = useState<string | null>(null);
+    const { selectedCategoryId, setSelectedCategoryId } = useContext(StateContext);
+
     const { isLoading, isError, data } = useQuery({
         queryKey: ['categories'],
         queryFn: async () => {

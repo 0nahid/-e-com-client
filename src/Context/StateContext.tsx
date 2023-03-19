@@ -1,11 +1,15 @@
 import { createContext, useEffect, useState } from "react";
 import { useLocalStorage } from "use-hooks";
 
-export const StyleContext = createContext({} as any);
+export const StateContext = createContext({} as any);
 
-export const StyleProvider = ({ children }: any) => {
+export const ContextProvider = ({ children }: any) => {
     const [loading, setLoading] = useState<boolean>(false);
     const [theme, setTheme] = useLocalStorage("theme", "light");
+    const [selectedCategoryId, setSelectedCategoryId] = useState<string | null>(null);
+    const [selectedBrandId, setSelectedBrandId] = useState<string | null>(null);
+
+
 
     //toggles the theme
     const toggleTheme = () => {
@@ -19,9 +23,12 @@ export const StyleProvider = ({ children }: any) => {
     }, [theme]);
 
     return (
-        <StyleContext.Provider value={{ theme, setTheme, loading, toggleTheme }}>
+        <StateContext.Provider value={{
+            theme, setTheme, loading, toggleTheme,
+            selectedCategoryId, setSelectedCategoryId, selectedBrandId, setSelectedBrandId
+        }}>
             {children}
-        </StyleContext.Provider>
+        </StateContext.Provider>
     );
 
 }

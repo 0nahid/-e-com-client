@@ -1,4 +1,5 @@
-import { StyleProvider } from '@/Context/StyleContext';
+
+import { ContextProvider } from '@/Context/StateContext';
 import store from '@/Redux/store';
 import '@/styles/globals.css';
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
@@ -18,11 +19,11 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <QueryClientProvider client={queryClient}>
       <Provider store={store}>
-        <StyleProvider>
+        <ContextProvider>
           <main className={poppins.className}>
             <Component {...pageProps} />
           </main>
-        </StyleProvider>
+        </ContextProvider>
       </Provider>
     </QueryClientProvider>
   );

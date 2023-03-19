@@ -1,14 +1,15 @@
 
+import { StateContext } from "@/Context/StateContext";
 import Pagination from "@/Shared/Pagination";
 import { useQuery } from "@tanstack/react-query";
 import Link from "next/link";
 import { useRouter } from 'next/router';
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 
 export default function Products() {
     const [limit, setLimit] = useState<number>(10);
     const [currentPage, setCurrentPage] = useState<number>(1);
-    const [category, setCategory] = useState<string>("");
+    const { selectedCategoryId, selectedBrandId } = useContext(StateContext);
     const router = useRouter();
     const { query } = router;
     // console.log(query);
@@ -17,8 +18,12 @@ export default function Products() {
     useEffect(() => {
         router.query.limit = limit.toString();
         router.query.page = currentPage.toString();
+        router.query.category = selectedCategoryId?.toString();
+        router.query.brand = selectedBrandId?.toString();
         router.push(router)
-    }, [limit, currentPage])
+    }, [limit, currentPage, selectedCategoryId, selectedBrandId])
+
+    console.log(selectedBrandId);
 
 
     if (products?.data?.length === 0) return (
@@ -69,7 +74,11 @@ export default function Products() {
 function GetProducts(query: any) {
     const { data, isLoading } = useQuery({
         queryKey: ["products", query?.page, query?.limit, query?.sort, query?.order, query?.search, query?.category, query?.brand, query?.rating, query?.inStock, query?.fastDelivery],
-        queryFn: () => fetch(`http://localhost:5000/api/v1/products?limit=${query.limit}&page=${query.page}`).then(res => res.json())
+        //    query will be done when the category is changed or brand is changed
+        queryFn: async () => {
+            const res = await fetch(`http://localhost:5000/api/v1/products?limit=${query?.limit || 10}&page=${query?.page || 1}&category=${query?.category || ""}&brand=${query?.brand || ""}`);
+            return res.json();
+        }
     })
     return {
         data: data?.data,

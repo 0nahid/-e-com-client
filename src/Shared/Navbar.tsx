@@ -1,9 +1,9 @@
-import { StyleContext } from "@/Context/StyleContext";
+import { StateContext } from "@/Context/StateContext";
 import { useContext } from "react";
 import { HiMoon } from 'react-icons/hi';
 import { MdOutlineLightMode } from "react-icons/md";
 export default function Navbar() {
-    const { theme, toggleTheme } = useContext(StyleContext);
+    const { theme, toggleTheme } = useContext(StateContext);
     return (
         <>
             <div className="navbar bg-base-100">

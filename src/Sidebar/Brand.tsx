@@ -1,6 +1,9 @@
+import { StateContext } from "@/Context/StateContext";
 import { useQuery } from "@tanstack/react-query";
+import { useContext } from "react";
 
 export default function Brand({ selectedCategoryId }: { selectedCategoryId: string }) {
+    const { selectedBrandId, setSelectedBrandId } = useContext(StateContext);
     const { isLoading, isError, data } = useQuery({
         queryKey: ['brands', selectedCategoryId],
         queryFn: async () => {
@@ -10,7 +13,16 @@ export default function Brand({ selectedCategoryId }: { selectedCategoryId: stri
     });
     if (isLoading) return <div>Loading...</div>
     if (isError) return <div>Error fetching data</div>
-    console.log(data.data);
+
+    const handleBrandChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const brandId = event.target.value;
+        if (brandId === selectedBrandId) {
+            // If the same brand is clicked again, deselect it
+            setSelectedBrandId(null);
+        } else {
+            setSelectedBrandId(brandId);
+        }
+    };
 
     return (
         <>
@@ -24,6 +36,8 @@ export default function Brand({ selectedCategoryId }: { selectedCategoryId: stri
                                 name="brand"
                                 className="radio radio-xs mr-2"
                                 value={brand._id}
+                                checked={selectedBrandId === brand._id}
+                                onChange={handleBrandChange}
                             />
                             {brand.name}
                         </label>
