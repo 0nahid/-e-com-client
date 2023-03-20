@@ -20,8 +20,15 @@ export default function Products() {
         router.query.page = currentPage.toString();
         router.query.category = selectedCategoryId?.toString();
         router.query.brand = selectedBrandId?.toString();
+        for (const key in query) {
+            if (query[key] === undefined || query[key] === "" || query[key] === null) {
+                delete query[key];
+            }
+        }
         router.push(router)
-    }, [limit, currentPage, selectedCategoryId, selectedBrandId])
+    }, [limit, currentPage,
+        selectedCategoryId, selectedBrandId
+    ])
 
     console.log(selectedBrandId);
 
@@ -72,11 +79,26 @@ export default function Products() {
 
 
 function GetProducts(query: any) {
+    let params: { [key: string]: string } = {};
+    for (const key in query) {
+        console.log(query[key]);
+
+        if (query[key] !== undefined && query[key] !== "" && query[key] !== null) {
+            params = { ...params, [key]: query[key] }
+        }
+    }
+    let querystr: string = ""
+    for (const key in params) {
+        querystr += `${key}=${params[key]}&`
+    }
+    querystr = querystr.slice(0, -1);
+
+
     const { data, isLoading } = useQuery({
         queryKey: ["products", query?.page, query?.limit, query?.sort, query?.order, query?.search, query?.category, query?.brand, query?.rating, query?.inStock, query?.fastDelivery],
         //    query will be done when the category is changed or brand is changed
         queryFn: async () => {
-            const res = await fetch(`http://localhost:5000/api/v1/products?limit=${query?.limit || 10}&page=${query?.page || 1}&category=${query?.category || ""}&brand=${query?.brand || ""}`);
+            const res = await fetch(`http://localhost:5000/api/v1/products?${querystr}`);
             return res.json();
         }
     })

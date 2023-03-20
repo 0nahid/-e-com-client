@@ -6,8 +6,8 @@ export const StateContext = createContext({} as any);
 export const ContextProvider = ({ children }: any) => {
     const [loading, setLoading] = useState<boolean>(false);
     const [theme, setTheme] = useLocalStorage("theme", "light");
-    const [selectedCategoryId, setSelectedCategoryId] = useState<string | null>(null);
-    const [selectedBrandId, setSelectedBrandId] = useState<string | null>(null);
+    const [selectedCategoryId, setSelectedCategoryId] = useState<string>("");
+    const [selectedBrandId, setSelectedBrandId] = useState<string>("");
 
 
 
