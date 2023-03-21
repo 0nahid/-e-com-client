@@ -8,6 +8,7 @@ export const ContextProvider = ({ children }: any) => {
     const [theme, setTheme] = useLocalStorage("theme", "light");
     const [selectedCategoryId, setSelectedCategoryId] = useState<string>("");
     const [selectedBrandId, setSelectedBrandId] = useState<string>("");
+    const [selectedPriceRange, setSelectedPriceRange] = useState<number[]>([0, 0]);
 
 
 
@@ -25,7 +26,7 @@ export const ContextProvider = ({ children }: any) => {
     return (
         <StateContext.Provider value={{
             theme, setTheme, loading, toggleTheme,
-            selectedCategoryId, setSelectedCategoryId, selectedBrandId, setSelectedBrandId
+            selectedCategoryId, setSelectedCategoryId, selectedBrandId, setSelectedBrandId , selectedPriceRange, setSelectedPriceRange
         }}>
             {children}
         </StateContext.Provider>

@@ -4,22 +4,49 @@ import Pagination from "@/Shared/Pagination";
 import { useQuery } from "@tanstack/react-query";
 import Link from "next/link";
 import { useRouter } from 'next/router';
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 
 export default function Products() {
     const [limit, setLimit] = useState<number>(10);
     const [currentPage, setCurrentPage] = useState<number>(1);
-    const { selectedCategoryId, selectedBrandId } = useContext(StateContext);
+    const { selectedCategoryId, selectedBrandId, selectedPriceRange, setSelectedPriceRange } = useContext(StateContext);
     const router = useRouter();
     const { query } = router;
     // console.log(query);
 
     const products = GetProducts(query);
+    const maxPriceRef = useRef(0);
+
+    useEffect(() => {
+        let minPrice = Infinity;
+        let maxPrice = -Infinity;
+
+        if (products?.data?.length > 0) {
+            // Find the min and max price of the products
+            products.data.forEach((product: any) => {
+                if (product.price < minPrice) minPrice = product.price;
+                if (product.price > maxPrice) maxPrice = product.price;
+            });
+
+            // Update the maxPriceRef with the new value
+            maxPriceRef.current = maxPrice;
+
+            // Set the min and max price of the slider
+            setSelectedPriceRange([minPrice, maxPrice]);
+        }
+    }, [products?.data, setSelectedPriceRange]);
+    
+    console.log(selectedPriceRange);
+    
+    
+
     useEffect(() => {
         router.query.limit = limit.toString();
         router.query.page = currentPage.toString();
         router.query.category = selectedCategoryId?.toString();
         router.query.brand = selectedBrandId?.toString();
+        // price[gt]=100&price[lt]=200
+        
         for (const key in query) {
             if (query[key] === undefined || query[key] === "" || query[key] === null) {
                 delete query[key];

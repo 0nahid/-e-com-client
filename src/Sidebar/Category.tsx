@@ -2,6 +2,7 @@ import { StateContext } from "@/Context/StateContext";
 import { useQuery } from "@tanstack/react-query";
 import { useContext } from 'react';
 import Brand from "./Brand";
+import Range from "./Range";
 
 interface Category {
     _id: string;
@@ -65,6 +66,9 @@ export default function Category() {
             </ul>
             {/* Brand under the category */}
             {selectedCategoryId && <Brand selectedCategoryId={selectedCategoryId} />}
+
+            {/* Range */}
+            <Range />
         </>
     );
 }
