@@ -3,6 +3,8 @@ import { useQuery } from "@tanstack/react-query";
 import { useContext } from "react";
 
 export default function Brand({ selectedCategoryId }: { selectedCategoryId: string }) {
+    console.log("selectedCategoryId", selectedCategoryId);
+    
     const { selectedBrandId, setSelectedBrandId } = useContext(StateContext);
     const { isLoading, isError, data } = useQuery({
         queryKey: ['brands', selectedCategoryId],

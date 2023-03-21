@@ -11,7 +11,7 @@ interface Category {
 }
 
 export default function Category() {
-    const { selectedCategoryId, setSelectedCategoryId } = useContext(StateContext);
+    const { selectedCategoryId, setSelectedCategoryId, setSelectedBrandId } = useContext(StateContext);
 
     const { isLoading, isError, data } = useQuery({
         queryKey: ['categories'],
@@ -23,12 +23,16 @@ export default function Category() {
 
     const handleCategoryChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const categoryId = event.target.value;
+        //    when i click on a category, i want to deselect the brand that was selected
+        setSelectedBrandId(null);
         if (categoryId === selectedCategoryId) {
             // If the same category is clicked again, deselect it
             setSelectedCategoryId(null);
-        } else {
+        }
+        else {
             setSelectedCategoryId(categoryId);
         }
+
     };
 
     if (isLoading) {
