@@ -1,9 +1,11 @@
+import { StateContext } from '@/Context/StateContext';
 import Slider from 'rc-slider';
 import 'rc-slider/assets/index.css';
-import { useState } from 'react';
+import { useContext } from 'react';
 
 export default function Range() {
-    const [values, setValues] = useState<number[]>([0, 100]);
+
+    const { selectedPriceRange, setSelectedPriceRange } = useContext(StateContext);
 
     return (
         <div className="flex flex-col gap-2">
@@ -11,17 +13,17 @@ export default function Range() {
             <div className="flex items-center gap-2">
                 <Slider
                     min={0}
-                    max={100}
-                    value={values}
+                    max={selectedPriceRange[1]}
+                    value={selectedPriceRange}
                     allowCross={false}
-                    onChange={(value) => setValues(value as number[])}
+                    onChange={(value) => setSelectedPriceRange(value as number[])}
                     range
                     pushable
                 />
             </div>
             <div className="flex justify-between">
-                <span>{values[0]}</span>
-                <span>{values[1]}</span>
+                <span>{selectedPriceRange[0]}</span>
+                <span>{selectedPriceRange[1]}</span>
             </div>
         </div>
     );
