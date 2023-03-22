@@ -1,5 +1,4 @@
 import { StateContext } from '@/Context/StateContext';
-import Slider from 'rc-slider';
 import 'rc-slider/assets/index.css';
 import { useContext } from 'react';
 
@@ -11,15 +10,11 @@ export default function Range() {
         <div className="flex flex-col gap-2">
             <h2 className="text-lg font-bold mb-2">Price</h2>
             <div className="flex items-center gap-2">
-                <Slider
-                    min={0}
-                    max={selectedPriceRange[1]}
-                    value={selectedPriceRange}
-                    allowCross={false}
-                    onChange={(value) => setSelectedPriceRange(value as number[])}
-                    range
-                    pushable
-                />
+                <div className="flex items-center">
+                    <label htmlFor="range" className="mr-2">Range:</label>
+                    <input id="range" type="range" className="form-range h-6 w-96" min="0" max="100" />
+                    <input id="rangeValue" type="number" className="form-input ml-2 w-16" value="0" min="0" max="100" />
+                </div>
             </div>
             <div className="flex justify-between">
                 <span>{selectedPriceRange[0]}</span>
