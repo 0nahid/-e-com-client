@@ -8,9 +8,6 @@ export default function Home() {
             <div className="flex justify-between">
                 <div>
                     <Sidebar />
-                    <Link href="/Test">
-                        test
-                    </Link>
                 </div>
                 <div>
                     <Products />

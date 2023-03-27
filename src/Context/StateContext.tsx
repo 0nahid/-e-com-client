@@ -5,7 +5,7 @@ export const StateContext = createContext({} as any);
 
 export const ContextProvider = ({ children }: any) => {
     const [loading, setLoading] = useState<boolean>(false);
-    const [theme, setTheme] = useLocalStorage("theme", "light");
+    const [theme, setTheme] = useLocalStorage("theme", "winter");
     const [selectedCategoryId, setSelectedCategoryId] = useState<string>("");
     const [selectedBrandId, setSelectedBrandId] = useState<string>("");
     const [selectedPriceRange, setSelectedPriceRange] = useState<number[]>([0, 0]);
@@ -14,7 +14,7 @@ export const ContextProvider = ({ children }: any) => {
 
     //toggles the theme
     const toggleTheme = () => {
-        setTheme(theme === "dark" ? "light" : "dark");
+        setTheme(theme === "night" ? "winter" : "night");
     };
 
     //modify data-theme attribute on document.body when theme changes
@@ -26,7 +26,7 @@ export const ContextProvider = ({ children }: any) => {
     return (
         <StateContext.Provider value={{
             theme, setTheme, loading, toggleTheme,
-            selectedCategoryId, setSelectedCategoryId, selectedBrandId, setSelectedBrandId , selectedPriceRange, setSelectedPriceRange
+            selectedCategoryId, setSelectedCategoryId, selectedBrandId, setSelectedBrandId, selectedPriceRange, setSelectedPriceRange
         }}>
             {children}
         </StateContext.Provider>
